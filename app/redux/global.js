@@ -52,12 +52,10 @@ const fetchAutoComplete = (text, query = intialQuery) => {
   text = encodeURIComponent(text)
   const queryRaw = Qs.stringify(query)
   const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?&input=${text}&${queryRaw}`
-  if(text.length > 3){
-    return dispatch => {
-      return fetch(url)
-       .then(response => response.json())
-       .then(json => (dispatch(receivePredictions(json))))
-    }
+  return dispatch => {
+    return fetch(url)
+     .then(response => response.json())
+     .then(json => (dispatch(receivePredictions(json))))
   }
 }
 
