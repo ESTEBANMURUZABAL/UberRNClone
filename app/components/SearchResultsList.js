@@ -11,14 +11,27 @@ export default class SearchResultsList extends Component {
   constructor(props) {
     super(props)
 
+    var locations = []
+    if(props.searchedLocations.length > 0){
+      locations = props.searchedLocations
+    }else{
+      locations = props.recentLocations
+    }
+    console.debug("construtor");
     this.state = {
-      dataSource: ds.cloneWithRows(props.recentLocations)
+      dataSource: ds.cloneWithRows(locations)
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    var locations = []
+    if(nextProps.searchedLocations.length > 0){
+      locations = nextProps.searchedLocations;
+    }else{
+      locations = nextProps.recentLocations;
+    }
     this.setState({
-      dataSource: ds.cloneWithRows(nextProps.recentLocations)
+      dataSource: ds.cloneWithRows(locations)
     })
   }
 

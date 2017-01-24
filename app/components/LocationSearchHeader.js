@@ -116,7 +116,10 @@ export default class LocationSearchHeader extends Component {
               >
                 <TextInput
                   style={styles.input}
-                  onChangeText={(source) => this.props.setSource(source)}
+                  onChangeText={(source) => {
+                    this.props.setSource(source)
+                    this.props.fetchAutoComplete(source)
+                  }}
                   value={this.props.source}
                   onFocus={this.move}
                   clearTextOnFocus={true}

@@ -17,6 +17,7 @@ import {
 
 const mapStateToProps = (state) => ({
   recentLocations: state.global.recentLocations,
+  searchedLocations: state.global.searchedLocations,
   shortcutLocations: state.global.recentLocations.slice(0, 3),
   searchIsOpen: state.global.searchIsOpen,
   destination: state.global.destination,
@@ -35,7 +36,7 @@ class Main extends Component {
   }
 
   render() {
-    const {recentLocations, shortcutLocations} = this.props
+    const {recentLocations, searchedLocations, shortcutLocations} = this.props
 
     const {width: windowWidth, height: windowHeight} = Dimensions.get('window')
     const style = {
@@ -51,6 +52,7 @@ class Main extends Component {
         <LocationSearchHeader
           searchIsOpen={this.props.searchIsOpen}
           openSearch={this.props.openSearch}
+          fetchAutoComplete={this.props.fetchAutoComplete}
           closeSearch={this.props.closeSearch}
           destination={this.props.destination}
           source={this.props.source}
@@ -68,6 +70,7 @@ class Main extends Component {
         />
         <LocationSearchResults visible={this.props.searchIsOpen}>
           <SearchResultsList
+            searchedLocations={searchedLocations}
             recentLocations={recentLocations}
             setDestination={this.props.setDestination}
             setSource={this.props.setSource}
@@ -86,7 +89,7 @@ class Main extends Component {
             <Image
               style={styles.controlButton}
               source={require('../images/icon-hamburger.png')}
-            /> 
+            />
           }
         </TouchableOpacity>
         <LocationButtonGroup
