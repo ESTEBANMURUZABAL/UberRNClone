@@ -5,7 +5,8 @@ import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 import { connect } from 'react-redux'
 import MapView from 'react-native-maps';
 
-import { globalActionCreators, SEARCH_SELECTED } from '../redux/global'
+import { globalActionCreators} from '../actions/main';
+import { SEARCH_SELECTED } from "../actions/types";
 
 import {
   LocationButtonGroup,

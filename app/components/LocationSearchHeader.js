@@ -9,7 +9,7 @@ import {
   Text,
 } from 'react-native'
 import * as Animatable from 'react-native-animatable';
-import {SEARCH_SELECTED} from "../redux/global";
+import {SEARCH_SELECTED} from "../actions/types";
 
 export default class LocationSearchHeader extends Component {
   constructor(props) {
