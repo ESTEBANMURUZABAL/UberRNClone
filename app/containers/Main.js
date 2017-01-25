@@ -5,7 +5,7 @@ import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 import { connect } from 'react-redux'
 import MapView from 'react-native-maps';
 
-import { globalActionCreators } from '../redux/global'
+import { globalActionCreators, SEARCH_SELECTED } from '../redux/global'
 
 import {
   LocationButtonGroup,
@@ -18,6 +18,8 @@ import {
 const mapStateToProps = (state) => ({
   recentLocations: state.global.recentLocations,
   searchedLocations: state.global.searchedLocations,
+  searchSelected: state.global.searchSelected,
+  setSearchSelect: state.global.setSearchSelect,
   shortcutLocations: state.global.recentLocations.slice(0, 3),
   searchIsOpen: state.global.searchIsOpen,
   destination: state.global.destination,
@@ -28,11 +30,21 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this._closeSearch = this._closeSearch.bind(this)
+    this._setLocation = this._setLocation.bind(this)
   }
 
   _closeSearch() {
     this.props.closeSearch()
     dismissKeyboard()
+  }
+
+  _setLocation(addressString){
+     const {searchSelected} = this.props;
+     if(searchSelected == SEARCH_SELECTED.DESTINATION){
+       this.props.setDestination(addressString);
+     }else{
+       this.props.setSource(addressString);
+     }
   }
 
   render() {
@@ -45,6 +57,8 @@ class Main extends Component {
       zIndex: 0,
     }
 
+
+
     return (
       <View
         style={styles.main}
@@ -56,6 +70,7 @@ class Main extends Component {
           closeSearch={this.props.closeSearch}
           destination={this.props.destination}
           source={this.props.source}
+          setSearchSelect={this.props.setSearchSelect}
           setDestination={this.props.setDestination}
           setSource={this.props.setSource}
         />
@@ -72,8 +87,7 @@ class Main extends Component {
           <SearchResultsList
             searchedLocations={searchedLocations}
             recentLocations={recentLocations}
-            setDestination={this.props.setDestination}
-            setSource={this.props.setSource}
+            setLocation={this._setLocation}
           />
         </LocationSearchResults>
         <TouchableOpacity

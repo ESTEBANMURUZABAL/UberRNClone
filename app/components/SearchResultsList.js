@@ -38,7 +38,7 @@ export default class SearchResultsList extends Component {
   _renderRow(rowData) {
     return (
       <SearchResultsRow
-        onPress={this.props.setSource}
+        onPress={this.props.setLocation}
         {...rowData }/>
     );
   }

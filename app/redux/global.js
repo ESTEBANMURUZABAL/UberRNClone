@@ -3,7 +3,13 @@ const types = {
   CLOSE_SEARCH: 'CLOSE_SEARCH',
   SET_DESTINATION: 'SET_DESTINATION',
   SET_SOURCE: 'SET_SOURCE',
-  RECEIVE_PREDICTIONS: 'RECEIVE_PREDICTIONS'
+  RECEIVE_PREDICTIONS: 'RECEIVE_PREDICTIONS',
+  SET_SEARCH_SELECTED: 'SET_SEARCH_SELECTED'
+}
+
+export const SEARCH_SELECTED = {
+  DESTINATION:'DESTINATION',
+  SOURCE:'SOURCE'
 }
 
 import Qs from 'qs';
@@ -24,6 +30,11 @@ const setDestination = (destination) => ({
 const setSource = (source) => ({
   type: types.SET_SOURCE,
   source,
+})
+
+const setSearchSelect = (select) => ({
+  type: types.SET_SEARCH_SELECTED,
+  select,
 })
 
 const receivePredictions = (json) => {
@@ -64,6 +75,7 @@ export const globalActionCreators = {
   closeSearch,
   setDestination,
   setSource,
+  setSearchSelect,
   fetchAutoComplete
 }
 
@@ -78,6 +90,7 @@ const initialState = {
   searchIsOpen: false,
   destination: 'Where to?',
   source: 'Office',
+  searchSelected: SEARCH_SELECTED.DESTINATION,
   searchedLocations:[]
 }
 
@@ -103,6 +116,10 @@ export default global = (state = initialState, action) => {
     case types.RECEIVE_PREDICTIONS:
       return Object.assign({}, state, {
         searchedLocations: action.predictions
+      })
+    case types.SET_SEARCH_SELECTED:
+      return Object.assign({}, state, {
+        searchSelected: action.select
       })
     default:
       return state

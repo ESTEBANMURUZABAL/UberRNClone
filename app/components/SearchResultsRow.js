@@ -7,7 +7,6 @@ export default class SearchResultsRow extends Component {
   constructor(props) {
     super(props)
     this._onPress = this._onPress.bind(this)
-
   }
 
   _onPress() {

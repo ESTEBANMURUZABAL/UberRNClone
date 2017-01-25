@@ -8,12 +8,24 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native'
-import * as Animatable from 'react-native-animatable'
+import * as Animatable from 'react-native-animatable';
+import {SEARCH_SELECTED} from "../redux/global";
 
 export default class LocationSearchHeader extends Component {
   constructor(props) {
     super(props)
     this.move = this.move.bind(this)
+    this._setSourceSelected = this._setSourceSelected.bind(this)
+    this._setDistinationSelected = this._setDistinationSelected.bind(this)
+  }
+
+  _setSourceSelected(){
+    this.props.setSearchSelect(SEARCH_SELECTED.SOURCE)
+    this.move()
+  }
+  _setDistinationSelected(){
+    this.props.setSearchSelect(SEARCH_SELECTED.DESTINATION)
+    this.move()
   }
 
   move() {
@@ -121,7 +133,7 @@ export default class LocationSearchHeader extends Component {
                     this.props.fetchAutoComplete(source)
                   }}
                   value={this.props.source}
-                  onFocus={this.move}
+                  onFocus={this._setSourceSelected}
                   clearTextOnFocus={true}
                 />
               </Animatable.View>
@@ -132,10 +144,13 @@ export default class LocationSearchHeader extends Component {
               >
                 <TextInput
                   style={styles.input}
-                  onChangeText={(destination) => this.props.setDestination(destination)}
+                  onChangeText={(destination) => {
+                    this.props.setDestination(destination)
+                    this.props.fetchAutoComplete(destination)
+                  }}
                   onSubmitEditing={this.handleSubmit}
                   value={this.props.destination}
-                  onFocus={this.move}
+                  onFocus={this._setDistinationSelected}
                   clearTextOnFocus={true}
                 />
               </Animatable.View>
